@@ -53,14 +53,12 @@ exports.update = (req, res) => {
   const { slug } = req.params;
   const { title, content, user } = req.body;
 
-  Post.findByIdAndUpdate(
-    { slug },
-    { title, content, user },
-    { new: true }
-  ).exec((err, post) => {
-    if (err) console.log(err);
-    res.json(post);
-  });
+  Post.findOneAndUpdate({ slug }, { title, content, user }, { new: true }).exec(
+    (err, post) => {
+      if (err) console.log(err);
+      res.json(post);
+    }
+  );
 };
 
 exports.destroy = (req, res) => {
