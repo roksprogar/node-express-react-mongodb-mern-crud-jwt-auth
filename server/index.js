@@ -22,6 +22,7 @@ mongoose.connect(connString)
 
 // Middleware.
 app.use(cors());
+app.use(express.json())
 app.use(morgan('dev'));
 
 // Routes.
