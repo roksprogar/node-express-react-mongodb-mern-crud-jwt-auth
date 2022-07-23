@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import Nav from './Nav';
 
 const Create = () => {
     const [state, setState] = useState({
@@ -39,7 +40,9 @@ const Create = () => {
     }
 
     return (
-      <div className="container p-5">
+      <div className="container pb-5">
+        <Nav />
+        <br/>
         <h1>Create post</h1>
         <br />
         {JSON.stringify(state)}
