@@ -5,6 +5,6 @@ const router = express.Router()
 // Import controller methods.
 const { create } = require('../controllers/post')
 
-router.post('/post', create);
+router.post('/create', create);
 
 module.exports = router;
