@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import Nav from './Nav';
 
-const Create = () => {
+const PostCreate = () => {
     const [state, setState] = useState({
         title: '',
         content: '',
@@ -13,11 +13,6 @@ const Create = () => {
     const {title, content, user} = state
 
     // Onchange event handler.
-    // function handleChange(name) {
-    //     return function(event) {
-    //         setState({ ...state, [name]: event.target.value })
-    //     }
-    // }
     const handleChange = (name) => (event) => {
         // console.log('name', name, 'event', event.target.value);
         setState({ ...state, [name]: event.target.value })
@@ -34,7 +29,6 @@ const Create = () => {
             alert(`A new post titled ${response.data.title} created!`)
         })
         .catch(error => {
-            console.log(error.response)
             alert(error.response.data.error)
         })
     }
@@ -44,7 +38,7 @@ const Create = () => {
         <Nav />
         <br/>
         <h1>Create post</h1>
-        <br />
+        <hr />
         {JSON.stringify(state)}
         <form onSubmit={handleSubmit}>
             <div className="form-group mb-3">
@@ -67,5 +61,5 @@ const Create = () => {
     );
   };
   
-  export default Create;
+  export default PostCreate;
   

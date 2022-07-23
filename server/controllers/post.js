@@ -37,3 +37,13 @@ exports.list = (req, res) => {
         res.json(posts)
     })
 }
+
+exports.show = (req, res) => {
+    const {slug} = req.params
+
+    Post.findOne({slug})
+    .exec((err, post) => {
+        if(err) console.log(err)
+        res.json(post)
+    })
+}
