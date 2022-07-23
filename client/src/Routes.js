@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import App from "./App";
+import Login from "./Login";
 import PostCreate from "./PostCreate";
 import PostSingle from "./PostSingle";
 import PostUpdate from "./PostUpdate";
@@ -10,6 +11,7 @@ const Routes = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={App} />
+        <Route path="/login" exact component={Login} />
         <Route path="/create" exact component={PostCreate} />
         <Route path="/post/:slug" exact component={PostSingle} />
         <Route path="/post/update/:slug" exact component={PostUpdate} />
