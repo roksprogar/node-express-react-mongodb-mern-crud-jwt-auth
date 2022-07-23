@@ -1,33 +1,47 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Nav from "./Nav";
 
-const PostCreate = () => {
+const PostUpdate = (props) => {
   const [state, setState] = useState({
     title: "",
     content: "",
+    slug: "",
     user: "",
   });
 
-  // Destructure values.
-  const { title, content, user } = state;
+  const { title, content, slug, user } = state;
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API}/post/${props.match.params.slug}`)
+      .then((response) => {
+        const { title, content, slug, user } = response.data;
+        setState({ ...state, title, content, slug, user });
+      })
+      .catch((error) => {
+        alert(`Error loading single post: ${error?.message}`);
+      });
+  }, [props.match.params.slug]);
 
   // Onchange event handler.
   const handleChange = (name) => (event) => {
-    // console.log('name', name, 'event', event.target.value);
     setState({ ...state, [name]: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log('title', title, 'user', user, 'content', content)
     axios
-      .post(`${process.env.REACT_APP_API}/create`, { title, content, user })
+      .put(`${process.env.REACT_APP_API}/post/update/${slug}`, {
+        title,
+        content,
+        user,
+      })
       .then((response) => {
-        // Empty the State.
-        console.log(response);
-        setState({ ...state, title: "", content: "", user: "" });
-        alert(`A new post titled ${response.data.title} created!`);
+        const { title, content, slug, user } = response.data;
+        // Set the State.
+        setState({ ...state, title, content, slug, user });
+        alert(`A new post titled ${title} updated!`);
       })
       .catch((error) => {
         alert(error.response.data.error);
@@ -38,9 +52,8 @@ const PostCreate = () => {
     <div className="container pb-5">
       <Nav />
       <br />
-      <h1>Create post</h1>
+      <h1>Update post: {state.title}</h1>
       <hr />
-      {JSON.stringify(state)}
       <form onSubmit={handleSubmit}>
         <div className="form-group mb-3">
           <label className="text-muted">Title</label>
@@ -75,11 +88,11 @@ const PostCreate = () => {
           />
         </div>
         <div>
-          <button className="btn btn-primary">Create</button>
+          <button className="btn btn-primary">Update</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default PostCreate;
+export default PostUpdate;

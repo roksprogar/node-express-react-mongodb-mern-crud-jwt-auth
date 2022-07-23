@@ -8,7 +8,7 @@ const { create, list, show, update, destroy } = require("../controllers/post");
 router.get("/", list);
 router.post("/create", create);
 router.get("/post/:slug", show);
-router.put("/post/:slug", update);
+router.put("/post/update/:slug", update);
 router.delete("/post/:slug", destroy);
 
 module.exports = router;
