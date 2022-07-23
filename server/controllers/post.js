@@ -27,3 +27,13 @@ exports.create = (req, res) => {
         res.json(post)
     })
 }
+
+exports.list = (req, res) => {
+    Post.find({})
+    .limit(10)
+    .sort({ createdAt: -1 })
+    .exec((err, posts) => {
+        if(err) console.log(err)
+        res.json(posts)
+    })
+}
