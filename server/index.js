@@ -4,17 +4,20 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+// Import routes.
+const postRoutes = require('./routes/post')
+
 // Instantiate the express app.
 const app = express();
 
+// Connect to MongoDB.
 const connString = process.env.DB_CONN
-
 mongoose.connect(connString)
 .then(() => {
-  console.log(`Connected to the database @ ${connString}`)
+  console.log(`Connected to the database: ${connString}`)
 })
-.catch((error) => {
-  console.log(error)
+.catch((err) => {
+  console.log(err)
 })
 
 // Middleware.
@@ -22,11 +25,7 @@ app.use(cors());
 app.use(morgan('dev'));
 
 // Routes.
-app.get('*', (req, res) => {
-  res.json({
-    data: 'You reached nodejs api for react node crud apps!',
-  });
-});
+app.use('/api', postRoutes)
 
 const PORT = process.env.PORT || 8000;
 
