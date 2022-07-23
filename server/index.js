@@ -7,6 +7,16 @@ require('dotenv').config();
 // Instantiate the express app.
 const app = express();
 
+const connString = process.env.DB_CONN
+
+mongoose.connect(connString)
+.then(() => {
+  console.log(`Connected to the database @ ${connString}`)
+})
+.catch((error) => {
+  console.log(error)
+})
+
 // Middleware.
 app.use(cors());
 app.use(morgan('dev'));
