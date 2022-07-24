@@ -21,16 +21,16 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log({ name, password });
-    // axios
-    //   .post(`${process.env.REACT_APP_API}/create`, { title, content, user })
-    //   .then((response) => {
-    //     // Empty the State.
-    //     setState({ ...state, title: "", content: "", user: "" });
-    //     alert(`A new post titled ${response.data.title} created!`);
-    //   })
-    //   .catch((error) => {
-    //     alert(error.response.data.error);
-    //   });
+    axios
+      .post(`${process.env.REACT_APP_API}/login`, { name, password })
+      .then((response) => {
+        console.log(response);
+        // Response will contain token and name.
+        // Redirect to create page.
+      })
+      .catch((error) => {
+        alert(error.response.data.error);
+      });
   };
 
   return (
