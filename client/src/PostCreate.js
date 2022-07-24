@@ -1,16 +1,22 @@
 import { useState } from "react";
 import axios from "axios";
 import Nav from "./Nav";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { getUser } from "./helpers";
 
 const PostCreate = () => {
   const [state, setState] = useState({
     title: "",
-    content: "",
-    user: "",
+    user: getUser(),
   });
 
+  const [content, setContent] = useState("");
+
+  // Rich text editor handle change.
+
   // Destructure values.
-  const { title, content, user } = state;
+  const { title, user } = state;
 
   // Onchange event handler.
   const handleChange = (name) => (event) => {
@@ -52,13 +58,17 @@ const PostCreate = () => {
           />
         </div>
         <div className="form-group mb-3">
-          <label className="text-muted">Content</label>
-          <textarea
-            onChange={handleChange("content")}
-            value={content}
-            type="text"
-            className="form-control"
-            placeholder="Write some content"
+          <CKEditor
+            editor={ClassicEditor}
+            data={content}
+            onReady={(editor) => {
+              // You can store the "editor" and use when it is needed.
+              // console.log("Editor is ready to use!", editor);
+            }}
+            onChange={(event, editor) => {
+              setContent(editor.getData());
+              // console.log({ event, editor, data });
+            }}
           />
         </div>
         <div className="form-group mb-3">
