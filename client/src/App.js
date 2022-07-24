@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Nav from "./Nav";
 import axios from "axios";
+import parse from "html-react-parser";
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -60,7 +61,9 @@ const App = () => {
                 <Link to={`/post/${post.slug}`}>
                   <h2>{post.title}</h2>
                 </Link>
-                <p className="lead">{post.content.substring(0, 200)}</p>
+                <div className="lead pt-3">
+                  {parse(post.content.substring(0, 200))}
+                </div>
                 <p>
                   Author <span className="badge bg-secondary">{post.user}</span>{" "}
                   Published on{" "}

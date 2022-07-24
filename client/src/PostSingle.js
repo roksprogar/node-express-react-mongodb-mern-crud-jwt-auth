@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Nav from "./Nav";
+import parse from "html-react-parser";
 
 const PostSingle = (props) => {
   const [post, setPost] = useState({});
@@ -28,7 +29,7 @@ const PostSingle = (props) => {
           {new Date(post.createdAt).toLocaleString()}
         </span>
       </p>
-      <p className="lead">{post.content}</p>
+      <div className="lead pt-3">{parse(post.content ?? "")}</div>
     </div>
   );
 };

@@ -31,7 +31,8 @@ const PostCreate = () => {
       .post(`${process.env.REACT_APP_API}/create`, { title, content, user })
       .then((response) => {
         // Empty the State.
-        setState({ ...state, title: "", content: "", user: "" });
+        setState({ ...state, title: "", user: "" });
+        setContent("");
         alert(`A new post titled ${response.data.title} created!`);
       })
       .catch((error) => {
