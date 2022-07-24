@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import Nav from "./Nav";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { authenticate } from "./helpers";
 
-const Login = () => {
+const Login = (props) => {
   // Create a state.
   const [state, setState] = useState({
     name: "",
@@ -20,12 +21,13 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({ name, password });
+    // console.log({ name, password });
     axios
       .post(`${process.env.REACT_APP_API}/login`, { name, password })
       .then((response) => {
-        console.log(response);
-        // Response will contain token and name.
+        // console.log(response);
+        // Response will contain token and name, let's store it.
+        authenticate(response, () => props.history.push("/create"));
         // Redirect to create page.
       })
       .catch((error) => {
@@ -70,4 +72,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Login);
