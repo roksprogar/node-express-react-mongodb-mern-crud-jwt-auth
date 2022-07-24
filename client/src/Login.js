@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import Nav from "./Nav";
 import axios from "axios";
-import { authenticate } from "./helpers";
+import { getUser, authenticate } from "./helpers";
 
 const Login = (props) => {
   // Create a state.
@@ -12,6 +12,10 @@ const Login = (props) => {
   });
 
   const { name, password } = state;
+
+  useEffect(() => {
+    getUser() && props.history.push("/");
+  }, []);
 
   // Onchange event handler.
   const handleChange = (name) => (event) => {

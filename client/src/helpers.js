@@ -18,7 +18,7 @@ export const getToken = () => {
 };
 
 // Access user's name from session storage.
-export const getName = () => {
+export const getUser = () => {
   if (window !== "undefined") {
     if (sessionStorage.getItem("user")) {
       return JSON.parse(sessionStorage.getItem("user"));
