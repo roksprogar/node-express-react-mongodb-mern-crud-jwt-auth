@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Nav from "./Nav";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const PostUpdate = (props) => {
   const [state, setState] = useState({
     title: "",
-    content: "",
     slug: "",
     user: "",
   });
 
-  const { title, content, slug, user } = state;
+  const [content, setContent] = useState("");
+
+  const { title, slug, user } = state;
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API}/post/${props.match.params.slug}`)
       .then((response) => {
         const { title, content, slug, user } = response.data;
-        setState({ ...state, title, content, slug, user });
+        setState({ ...state, title, slug, user });
+        setContent(content);
       })
       .catch((error) => {
         alert(`Error loading single post: ${error?.message}`);
@@ -67,13 +71,17 @@ const PostUpdate = (props) => {
           />
         </div>
         <div className="form-group mb-3">
-          <label className="text-muted">Content</label>
-          <textarea
-            onChange={handleChange("content")}
-            value={content}
-            type="text"
-            className="form-control"
-            placeholder="Write some content"
+          <CKEditor
+            editor={ClassicEditor}
+            data={content}
+            onReady={(editor) => {
+              // You can store the "editor" and use when it is needed.
+              // console.log("Editor is ready to use!", editor);
+            }}
+            onChange={(event, editor) => {
+              setContent(editor.getData());
+              // console.log({ event, editor, data });
+            }}
           />
         </div>
         <div className="form-group mb-3">
