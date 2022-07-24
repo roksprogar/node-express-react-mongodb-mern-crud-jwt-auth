@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const expressJwt = require("express-jwt");
+const { expressjwt: expjwt } = require("express-jwt");
 
 exports.login = (req, res) => {
   const { name, password } = req.body;
@@ -15,3 +15,9 @@ exports.login = (req, res) => {
     });
   }
 };
+
+// If the token is valid, the data (name) will be available in the body.user.name
+exports.requireSignin = expjwt({
+  secret: process.env.JWT_SECRET,
+  algorithms: ["HS256"],
+});
