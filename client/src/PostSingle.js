@@ -17,19 +17,28 @@ const PostSingle = (props) => {
       });
   }, [props.match.params.slug]);
 
+  const showSinglePost = () => {
+    return (
+      <div className="row">
+        <div className="col-md-8 offset-md-2 pt-3 pb-2">
+          <h1>{post.title}</h1>
+          <p>
+            Author <span className="badge bg-secondary">{post.user}</span>{" "}
+            Published on{" "}
+            <span className="badge bg-secondary">
+              {new Date(post.createdAt).toLocaleString()}
+            </span>
+          </p>
+          <div className="lead pt-3">{parse(post.content ?? "")}</div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="container pb-5">
       <Nav />
-      <br />
-      <h1>{post.title}</h1>
-      <p>
-        Author <span className="badge bg-secondary">{post.user}</span> Published
-        on{" "}
-        <span className="badge bg-secondary">
-          {new Date(post.createdAt).toLocaleString()}
-        </span>
-      </p>
-      <div className="lead pt-3">{parse(post.content ?? "")}</div>
+      {post && showSinglePost()}
     </div>
   );
 };
