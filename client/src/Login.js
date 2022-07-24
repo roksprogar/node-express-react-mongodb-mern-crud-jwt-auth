@@ -15,7 +15,7 @@ const Login = (props) => {
 
   useEffect(() => {
     getUser() && props.history.push("/");
-  }, []);
+  }, [props.history]);
 
   // Onchange event handler.
   const handleChange = (name) => (event) => {
