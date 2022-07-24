@@ -3,6 +3,7 @@ import axios from "axios";
 import Nav from "./Nav";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { getToken } from "./helpers";
 
 const PostUpdate = (props) => {
   const [state, setState] = useState({
@@ -36,11 +37,19 @@ const PostUpdate = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .put(`${process.env.REACT_APP_API}/post/update/${slug}`, {
-        title,
-        content,
-        user,
-      })
+      .put(
+        `${process.env.REACT_APP_API}/post/update/${slug}`,
+        {
+          title,
+          content,
+          user,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+        }
+      )
       .then((response) => {
         const { title, content, slug, user } = response.data;
         // Set the State.

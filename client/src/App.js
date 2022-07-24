@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Nav from "./Nav";
 import axios from "axios";
 import parse from "html-react-parser";
-import { getUser } from "./helpers";
+import { getUser, getToken } from "./helpers";
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -33,7 +33,11 @@ const App = () => {
 
   const deletePost = (slug) => {
     axios
-      .delete(`${process.env.REACT_APP_API}/post/${slug}`)
+      .delete(`${process.env.REACT_APP_API}/post/${slug}`, {
+        headers: {
+          authorization: `Bearer ${getToken()}`,
+        },
+      })
       .then((response) => {
         alert(response.data.message);
         fetchPosts();

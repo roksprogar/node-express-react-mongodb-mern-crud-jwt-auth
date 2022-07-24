@@ -3,7 +3,7 @@ import axios from "axios";
 import Nav from "./Nav";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { getUser } from "./helpers";
+import { getUser, getToken } from "./helpers";
 
 const PostCreate = () => {
   const [state, setState] = useState({
@@ -28,7 +28,15 @@ const PostCreate = () => {
     event.preventDefault();
     // console.log('title', title, 'user', user, 'content', content)
     axios
-      .post(`${process.env.REACT_APP_API}/create`, { title, content, user })
+      .post(
+        `${process.env.REACT_APP_API}/create`,
+        { title, content, user },
+        {
+          headers: {
+            authorization: `Bearer ${getToken()}`,
+          },
+        }
+      )
       .then((response) => {
         // Empty the State.
         setState({ ...state, title: "", user: "" });
