@@ -31,7 +31,7 @@ const Login = (props) => {
       .then((response) => {
         // console.log(response);
         // Response will contain token and name, let's store it.
-        authenticate(response, () => props.history.push("/create"));
+        authenticate(response, () => props.history.push("/"));
         // Redirect to create page.
       })
       .catch((error) => {

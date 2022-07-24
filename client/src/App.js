@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Nav from "./Nav";
 import axios from "axios";
 import parse from "html-react-parser";
+import { getUser } from "./helpers";
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -72,20 +73,22 @@ const App = () => {
                   </span>
                 </p>
               </div>
-              <div className="col-md-2">
-                <Link
-                  to={`/post/update/${post.slug}`}
-                  className="btn btn-sm btn-outline-warning me-1"
-                >
-                  Update
-                </Link>
-                <button
-                  onClick={() => deleteConfirm(post.slug)}
-                  className="btn btn-sm btn-outline-danger"
-                >
-                  Delete
-                </button>
-              </div>
+              {getUser() && (
+                <div className="col-md-2">
+                  <Link
+                    to={`/post/update/${post.slug}`}
+                    className="btn btn-sm btn-outline-warning me-1"
+                  >
+                    Update
+                  </Link>
+                  <button
+                    onClick={() => deleteConfirm(post.slug)}
+                    className="btn btn-sm btn-outline-danger"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
